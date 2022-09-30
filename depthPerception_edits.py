@@ -27,7 +27,7 @@ def reward_function(params):
         reward_lane = 1e-3
 
     # Penalize if the agent is too close to the next object
-    reward_avoid = 1.0
+    reward_avoid = 10.0
 
     # Distance to the next object
     distance_closest_object = objects_distance[next_object_index]
@@ -55,7 +55,7 @@ def reward_function(params):
         
     #zig zag
     
-    steeringLimit = 13
+    steeringLimit = 14
     if absSteeringAngle > steeringLimit:
         reward * 0.7
     else:
