@@ -49,7 +49,7 @@ def reward_function(params):
     #lap time reward
     
     if steps > 0:
-        reward += (progress*150/steps) * speed
+        reward += (progress*150/steps) * 2
     else:
         reward += 1
         
@@ -60,5 +60,9 @@ def reward_function(params):
         reward * 0.7
     else:
         reward += 1
+
+    #speed
+
+    reward *= speed
 
     return reward
