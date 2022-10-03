@@ -16,6 +16,7 @@ def reward_function(params):
     waypoints = params['waypoints']
     closestWaypoints = params['closest_waypoints']
     heading = params['heading']
+    speed = params['speed']
 
     # Initialize reward with a small number but not zero
     # because zero means off-track or crashed
@@ -63,5 +64,9 @@ def reward_function(params):
     directionThreshold = 10.0
     if directionDiff > directionThreshold:
         reward *= 0.5
+
+    #speed
+
+    reward += (speed * 10)
 
     return reward
