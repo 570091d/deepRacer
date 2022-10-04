@@ -70,12 +70,9 @@ def reward_function(params):
     reward += (speed * 100)
 
     #steering 
-    if absSteeringAngle > 13 and speed > 2:
-        reward *= 0.5
-    if absSteeringAngle <= 5 and speed > 3:
-        reward *= 2
-    if absSteeringAngle > 15 and speed < 2:
-        reward *= 2
-
+    if absSteeringAngle > 13:
+        reward *= 0.7
+    else:
+        reward += 1
 
     return reward
