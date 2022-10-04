@@ -65,4 +65,8 @@ def reward_function(params):
     if directionDiff > directionThreshold:
         reward *= 0.5
 
+    #speed
+
+    reward += (speed * 10)
+
     return reward

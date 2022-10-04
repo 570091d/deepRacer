@@ -17,23 +17,25 @@ def reward_function(params):
     closestWaypoints = params['closest_waypoints']
     heading = params['heading']
     speed = params['speed']
+    steps = params['steps']
+    progress = params['progress']
+    absSteeringAngle = abs(params['steering_angle'])
 
-    # Initialize reward with a small number but not zero
-    # because zero means off-track or crashed
+    #Initialize reward with a small number but not zero because zero means off-track or crashed
     reward = 1e-3
 
-    # Reward if the agent stays inside the two borders of the track
+    #Reward if the agent stays inside the two borders of the track
     if all_wheels_on_track and (0.5 * track_width - distance_from_center) >= 0.05:
         reward_lane = 1.0
     else:
         reward_lane = 1e-3
 
-    # Penalize if the agent is too close to the next object
+    #Penalize if the agent is too close to the next object
     reward_avoid = 1.0
 
-    # Distance to the next object
+    #Distance to the next object
     distance_closest_object = objects_distance[next_object_index]
-    # Decide if the agent and the next object is on the same lane
+    #Decide if the agent and the next object is on the same lane
     is_same_lane = objects_left_of_center[next_object_index] == is_left_of_center
 
     if is_same_lane:
@@ -44,11 +46,10 @@ def reward_function(params):
         elif distance_closest_object < 0.3:
             reward_avoid = 1e-3 # Likely crashed
 
-    # Calculate reward by putting different weights on 
-    # the two aspects above
+    #Calculate reward by putting different weights on the two aspects above
     reward += 1.0 * reward_lane + 4.0 * reward_avoid
     
-    # calculate centerline based on the closest waypoints
+    #calculate centerline based on the closest waypoints
     nextPoint = waypoints[closestWaypoints[1]]
     prevPoint = waypoints[closestWaypoints[0]]
     
@@ -64,5 +65,14 @@ def reward_function(params):
     directionThreshold = 10.0
     if directionDiff > directionThreshold:
         reward *= 0.5
+
+    #speed
+    reward += (speed * 100)
+
+    #progress reward
+    if steps > 0:
+        reward += (progress*150/steps)
+    else:
+        reward += 1
 
     return reward
