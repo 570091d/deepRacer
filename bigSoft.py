@@ -55,4 +55,8 @@ def reward_function(params):
     #speed
     reward += (speed * 100)
 
+    #ziggy
+    if absSteeringAngle > 13:
+        reward *= 0.7
+
     return reward
