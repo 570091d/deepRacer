@@ -50,10 +50,10 @@ def reward_function(params):
     reward += 1.0 * reward_lane + 4.0 * reward_avoid
     
     if  steps > 0:
-        reward += (progress*100/steps)
+        reward += (progress*150/steps)
 
     #speed
-    reward += (speed * 100)
+    reward += (speed * 50)
 
     #ziggy
     if absSteeringAngle > 13:
