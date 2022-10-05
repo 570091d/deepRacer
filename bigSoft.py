@@ -49,30 +49,10 @@ def reward_function(params):
     #Calculate reward by putting different weights on the two aspects above
     reward += 1.0 * reward_lane + 4.0 * reward_avoid
     
-    #calculate centerline based on the closest waypoints
-    nextPoint = waypoints[closestWaypoints[1]]
-    prevPoint = waypoints[closestWaypoints[0]]
-    
-    #calculate the direction in radius, arctan2(dy, dx), the reslut is (-pi, pi) in radians
-    trackDirection = math.atan2(nextPoint[1] - prevPoint[1], nextPoint[0] - prevPoint[0])
-    #convert to degree
-    trackDirection = math.degrees(trackDirection)
-    #calculate the difference between thre track direction and the heading direction
-    directionDiff = abs(trackDirection - heading)
-    if directionDiff > 180:
-        directionDiff = 360 - directionDiff
-    #the stick
-    directionThreshold = 10.0
-    if directionDiff > directionThreshold:
-        reward *= 0.5
+    if  steps > 0:
+        reward += (progress*100/steps)
 
     #speed
     reward += (speed * 100)
-
-    #steering 
-    if absSteeringAngle > 13:
-        reward *= 0.7
-    else:
-        reward += 1
 
     return reward
