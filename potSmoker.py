@@ -57,7 +57,7 @@ def reward_function(params):
     
     steeringLimit = 14
     if absSteeringAngle > steeringLimit:
-        reward * 0.7
+        reward *= 0.7
     else:
         reward += 1
 
