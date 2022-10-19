@@ -1,11 +1,8 @@
 import math
 
 def reward_function(params):
-    '''
-    Example of rewarding the agent to stay inside two borders
-    and penalizing getting too close to the objects in front
-    '''
-
+    
+    #inputs
     all_wheels_on_track = params['all_wheels_on_track']
     distance_from_center = params['distance_from_center']
     track_width = params['track_width']
@@ -19,22 +16,22 @@ def reward_function(params):
     speed = params['speed']
     absSteeringAngle = abs(params['steering_sngle'])
 
-    # Initialize reward with a small number but not zero
-    # because zero means off-track or crashed
+    #initialize reward with a small number but not zero
+    #zero means off-track or crashed
     reward = 1e-3
 
-    # Reward if the agent stays inside the two borders of the track
+    #reward if the agent stays inside the two borders of the track
     if all_wheels_on_track and (0.5 * track_width - distance_from_center) >= 0.05:
         reward_lane = 1.0
     else:
         reward_lane = 1e-3
 
-    # Penalize if the agent is too close to the next object
+    #penalize if the agent is too close to the next object
     reward_avoid = 1.0
 
-    # Distance to the next object
+    #distance to the next object
     distance_closest_object = objects_distance[next_object_index]
-    # Decide if the agent and the next object is on the same lane
+    #decide if the agent and the next object is on the same lane
     is_same_lane = objects_left_of_center[next_object_index] == is_left_of_center
 
     if is_same_lane:
@@ -45,11 +42,11 @@ def reward_function(params):
         elif distance_closest_object < 0.3:
             reward_avoid = 1e-3 # Likely crashed
 
-    # Calculate reward by putting different weights on 
-    # the two aspects above
+    #calculate reward by putting different weights on 
+    #the two aspects above
     reward += 1.0 * reward_lane + 4.0 * reward_avoid
     
-    # calculate centerline based on the closest waypoints
+    #calculate centerline based on the closest waypoints
     nextPoint = waypoints[closestWaypoints[1]]
     prevPoint = waypoints[closestWaypoints[0]]
     
