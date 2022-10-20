@@ -30,6 +30,10 @@ def reward_function(params):
     else:
         reward_lane = 1e-3
 
+    #zoomy
+
+    reward += speed
+
     #Penalize if the agent is too close to the next object
     reward_avoid = 1.0
 
@@ -49,10 +53,11 @@ def reward_function(params):
     #Calculate reward by putting different weights on the two aspects above
     reward += 1.0 * reward_lane + 4.0 * reward_avoid
     
+    #progress reward
+    rewardMod = (progress*150/steps)
     if  steps > 0:
-        reward += (progress*150/steps)*(speed**2)
-
-
+        reward *= rewardMod
+        
     #ziggy
     if absSteeringAngle > 13:
         reward *= 0.7
