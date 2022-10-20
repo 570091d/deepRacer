@@ -26,6 +26,9 @@ def reward_function(params):
     else:
         reward_lane = 1e-3
 
+    #speed
+    reward += (speed**2)
+
     #penalize if the agent is too close to the next object
     reward_avoid = 1.0
 
@@ -41,9 +44,6 @@ def reward_function(params):
             reward_avoid *= 0.2
         elif distance_closest_object < 0.3:
             reward_avoid = 1e-3 # Likely crashed
-
-    #speed
-    reward += (speed**2) * 10
 
     #calculate reward by putting different weights on 
     #the two aspects above
