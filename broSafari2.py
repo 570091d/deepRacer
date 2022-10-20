@@ -14,7 +14,7 @@ def reward_function(params):
     closestWaypoints = params['closest_waypoints']
     heading = params['heading']
     speed = params['speed']
-    absSteeringAngle = abs(params['steering_sngle'])
+    absSteeringAngle = abs(params['steering_angle'])
 
     #initialize reward with a small number but not zero
     #zero means off-track or crashed
@@ -42,6 +42,9 @@ def reward_function(params):
         elif distance_closest_object < 0.3:
             reward_avoid = 1e-3 # Likely crashed
 
+    #speed
+    reward += (speed**2) * 10
+
     #calculate reward by putting different weights on 
     #the two aspects above
     reward += 1.0 * reward_lane + 4.0 * reward_avoid
@@ -63,8 +66,5 @@ def reward_function(params):
     if directionDiff > directionThreshold:
         reward *= 0.5
 
-    #speed
-
-    reward += speed * 25
 
     return reward
