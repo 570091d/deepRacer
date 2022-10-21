@@ -57,6 +57,8 @@ def reward_function(params):
     rewardMod = (progress*150/steps)
     if  steps > 0:
         reward *= rewardMod
+    else:
+        reward += 1
         
     #ziggy
     if absSteeringAngle > 13:
