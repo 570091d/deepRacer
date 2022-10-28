@@ -15,6 +15,8 @@ def reward_function(params):
     heading = params['heading']
     speed = params['speed']
     absSteeringAngle = abs(params['steering_angle'])
+    pregress = params['progress']
+    steps = params['steps']
 
     #initialize reward with a small number but not zero
     #zero means off-track or crashed
@@ -25,9 +27,6 @@ def reward_function(params):
         reward_lane = 1.0
     else:
         reward_lane = 1e-3
-
-    #speed
-    reward += (speed**2)
 
     #penalize if the agent is too close to the next object
     reward_avoid = 1.0
@@ -49,6 +48,12 @@ def reward_function(params):
     #the two aspects above
     reward += 1.0 * reward_lane + 4.0 * reward_avoid
     
+    #speed
+    reward += (speed)
+
+    #progress
+    reward += (pregress*100/steps)
+
     #calculate centerline based on the closest waypoints
     nextPoint = waypoints[closestWaypoints[1]]
     prevPoint = waypoints[closestWaypoints[0]]
